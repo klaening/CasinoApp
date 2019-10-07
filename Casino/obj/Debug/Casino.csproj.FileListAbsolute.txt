@@ -1,0 +1,6 @@
+C:\Users\Mikael\source\repos\Casino\Casino\bin\Debug\Casino.exe.config
+C:\Users\Mikael\source\repos\Casino\Casino\bin\Debug\Casino.exe
+C:\Users\Mikael\source\repos\Casino\Casino\bin\Debug\Casino.pdb
+C:\Users\Mikael\source\repos\Casino\Casino\obj\Debug\Casino.csprojAssemblyReference.cache
+C:\Users\Mikael\source\repos\Casino\Casino\obj\Debug\Casino.exe
+C:\Users\Mikael\source\repos\Casino\Casino\obj\Debug\Casino.pdb
