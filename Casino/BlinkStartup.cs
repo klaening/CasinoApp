@@ -6,14 +6,10 @@ using System.Threading.Tasks;
 
 namespace Casino
 {
-    class Program
+    class BlinkStartup
     {
-        static void Main(string[] args)
+        public static void CasinoHeader()
         {
-            BlinkStartup.CasinoHeader();
-            BlinkStartup.BlinkPressAnyKey();
-
-            Console.Clear();
             Console.WriteLine(@"        
         CCCCCCCCCCCCC                                    iiii  
      CCC::::::::::::C                                   i::::i 
@@ -35,26 +31,22 @@ C:::::C               a::::aaaa::::::a      s::::::s    i::::i  n::::n    n::::n
        -----------------------------------------------------------------------------------------
        -----------------------------------------------------------------------------------------
 ");
+        }
 
-            Console.WriteLine(@"
-        _______________________________________________________________________________________
-       |     *1*    |                                                                          |
-       |    50/50   |                                                                          |
-       |     ***    |                                                                          |
-       |____________|__________________________________________________________________________|");
+        public static void BlinkPressAnyKey()
+        {
+            string title = @"                                           Press any key";
 
-            String choice = Console.ReadLine();
-
-            switch (choice)
+            bool visible = true;
+            while (!Console.KeyAvailable)
             {
-                case "1":
-                    GameOfChance.RunGameOfChance();
-                    break;
-
-                default:
-                    break;
+                for (int i = 0; i <= 1; i++)
+                {
+                    Console.Write("\r" + (visible ? title : new String(' ', title.Length)));
+                    System.Threading.Thread.Sleep(600);
+                    visible = !visible;
+                }
             }
-            Console.ReadKey();
         }
     }
 }
