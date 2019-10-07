@@ -10,6 +10,8 @@ namespace Casino
     {
         static void Main(string[] args)
         {
+            Player player = new Player();
+
             BlinkStartup.CasinoHeader();
             BlinkStartup.BlinkPressAnyKey();
 
@@ -36,12 +38,15 @@ C:::::C               a::::aaaa::::::a      s::::::s    i::::i  n::::n    n::::n
        -----------------------------------------------------------------------------------------
 ");
 
-            Console.WriteLine(@"
+            Console.WriteLine($@"
         _______________________________________________________________________________________
        |     *1*    |                                                                          |
        |    50/50   |                                                                          |
        |     ***    |                                                                          |
        |____________|__________________________________________________________________________|");
+
+            Player.ShowStatus();
+            Console.WriteLine();
 
             String choice = Console.ReadLine();
 

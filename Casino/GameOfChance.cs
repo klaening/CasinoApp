@@ -10,6 +10,7 @@ namespace Casino
     {
         public void GameOfChanceGame()
         {
+
             bool boolean = true;
             string guess;
 
@@ -19,6 +20,9 @@ namespace Casino
                 {
                     Console.Clear();
                     ChanceHeader();
+
+                    Player.PlaceBet();
+                    Console.WriteLine();
 
                     Console.WriteLine("Which colour do you want to bet on?");
                     Console.WriteLine("Red or Black? ");
