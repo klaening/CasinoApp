@@ -8,11 +8,12 @@ namespace Casino
 {
     class GameOfChance
     {
-        public void GameOfChanceGame()
+        public void GameOfChanceGame(Player p)
         {
 
             bool boolean = true;
             string guess;
+            int winnings = 0;
 
             while (boolean == true)
             {
@@ -20,7 +21,10 @@ namespace Casino
                 {
                     Console.Clear();
                     ChanceHeader();
+                    Console.WriteLine();
 
+                    Player.ShowStatus();
+                    Console.WriteLine();
                     Player.PlaceBet();
                     Console.WriteLine();
 
@@ -61,6 +65,9 @@ namespace Casino
                         {
                             Console.WriteLine();
                             Console.WriteLine("Congratulations!");
+                            Console.WriteLine($"You just won ");
+                            winnings += 10;
+                            p.money += winnings;
                         }
                         else if (guess == "BLACK" && result == 2)
                         {
@@ -107,7 +114,7 @@ namespace Casino
             }
             else
             {
-                GameOfChanceGame();
+                RunGameOfChance(p);
             }
 
         }
@@ -194,10 +201,10 @@ namespace Casino
 ");
         }
 
-        public static void RunGameOfChance()
+        public static void RunGameOfChance(Player p)
         {
             GameOfChance gOC = new GameOfChance();
-            gOC.GameOfChanceGame();
+            gOC.GameOfChanceGame(p);
         }
     }
 }
