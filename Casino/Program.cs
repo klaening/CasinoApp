@@ -10,13 +10,23 @@ namespace Casino
     {
         static void Main(string[] args)
         {
+            String choice;
             Player player = new Player();
 
             BlinkStartup.CasinoHeader();
             BlinkStartup.BlinkPressAnyKey();
 
-            Console.Clear();
-            Console.WriteLine(@"        
+            choice = MainMenu(player);
+            Console.ReadKey();
+        }
+
+        private static string MainMenu(Player player)
+        {
+            string choice;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine(@"        
         CCCCCCCCCCCCC                                    iiii  
      CCC::::::::::::C                                   i::::i 
    CC:::::::::::::::C                                    iiii  
@@ -38,26 +48,32 @@ C:::::C               a::::aaaa::::::a      s::::::s    i::::i  n::::n    n::::n
        -----------------------------------------------------------------------------------------
 
                                        Choose your game!");
-                            
-            Console.WriteLine($@"
+
+                Console.WriteLine($@"
             *1*
            50/50
             ***");
-            Player.ShowStatus();
-            Console.WriteLine();
+                Player.ShowStatus(player);
+                Console.WriteLine();
 
-            String choice = Console.ReadLine();
+                choice = Console.ReadLine();
 
-            switch (choice)
-            {
-                case "1":
-                    GameOfChance.RunGameOfChance(player);
-                    break;
+                switch (choice)
+                {
+                    case "0":
+                        break;
 
-                default:
-                    break;
-            }
-            Console.ReadKey();
+                    case "1":
+                        //GameOfChance.RunGameOfChance(player);
+                        GameOfChance game = new GameOfChance();
+                        game.CheckMoney(player);
+                        break;
+
+                    default:
+                        break;
+                }
+            } while (choice != "0");
+            return choice;
         }
     }
 }

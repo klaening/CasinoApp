@@ -8,12 +8,24 @@ namespace Casino
 {
     class GameOfChance
     {
+        public void CheckMoney(Player p)
+        {
+            if (p.money > 0)
+            {
+                GameOfChanceGame(p);
+            }
+            else
+            {
+                Console.WriteLine("Insufficient funds!");
+            }
+        }
+
         public void GameOfChanceGame(Player p)
         {
 
             bool boolean = true;
             string guess;
-            int winnings = 0;
+            //int winnings = 1;
 
             while (boolean == true)
             {
@@ -23,9 +35,24 @@ namespace Casino
                     ChanceHeader();
                     Console.WriteLine();
 
-                    Player.ShowStatus();
+                    Player.ShowStatus(p);
                     Console.WriteLine();
-                    Player.PlaceBet();
+                    int bet;
+
+                    do
+                    {
+                        Console.Write("How much do you want to bet? ");
+                        bet = int.Parse(Console.ReadLine());
+
+                        if (bet > p.money || bet < 1)
+                        {
+                            Console.WriteLine("Invalid bet!");
+                        }
+                    } while (bet > p.money || bet < 1);
+                    
+                    p.money -= bet;
+
+                    //Player.PlaceBet(p);
                     Console.WriteLine();
 
                     Console.WriteLine("Which colour do you want to bet on?");
@@ -42,6 +69,7 @@ namespace Casino
                         Console.ReadKey();
                         Console.WriteLine();
                         Random randomNumber = new Random();
+                        System.Threading.Thread.Sleep(500);
                         int result = randomNumber.Next(1, 3);
 
                         Console.Write("It was");
@@ -65,14 +93,19 @@ namespace Casino
                         {
                             Console.WriteLine();
                             Console.WriteLine("Congratulations!");
-                            Console.WriteLine($"You just won ");
-                            winnings += 10;
-                            p.money += winnings;
+                            Console.WriteLine($"You bet {bet}");
+                            bet *= 2;
+                            Console.WriteLine($"You just won {bet}");
+                            p.money += bet;
                         }
                         else if (guess == "BLACK" && result == 2)
                         {
                             Console.WriteLine();
                             Console.WriteLine("Congratulations!");
+                            Console.WriteLine($"You bet {bet}");
+                            bet *= 2;
+                            Console.WriteLine($"You just won {bet}");
+                            p.money += bet;
                         }
                         else
                         {
@@ -94,23 +127,52 @@ namespace Casino
                 string choice = Console.ReadLine();
                 choice = choice.ToUpper();
 
-                if (choice == "N")
+                //Städa upp här, står i fel ordning
+                //if (choice == "Y")
+                //{
+                //    if (p.money > 0)
+                //    {
+
+                //    }
+                //}
+                if (p.money > 0)
                 {
-                    boolean = false;
+                    if (choice == "N")
+                    {
+                    }
+                    if (choice == "Y")
+                    {
+                        boolean = true;
+                    }
+                    else
+                    {
+                        while (choice != "Y" && choice != "N")
+                        {
+                            Console.WriteLine("Sorry, didn't catch that...");
+                            Console.Write("Want to go again? Y or N: ");
+                            choice = Console.ReadLine();
+                            choice = choice.ToUpper();
+                        }
+                    }
                 }
                 else
                 {
-                    boolean = true;
+                    Console.WriteLine("Sorry, insufficient funds...");
+                    Console.ReadKey();
                 }
             }
 
-            Console.Write("Want to exit game? Y or N: ");
+            Console.Write("Want to exit game? Y or N or M for menu: ");
             string exitChoice = Console.ReadLine();
             exitChoice = exitChoice.ToUpper();
 
             if (exitChoice == "Y")
             {
                 Environment.Exit(0);
+            }
+            else if (exitChoice == "M")
+            {
+                
             }
             else
             {

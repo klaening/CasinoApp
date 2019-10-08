@@ -13,19 +13,21 @@ namespace Casino
         public void Bet()
         {
             int bet;
+            
             do
             {
                 Console.Write("How much do you want to bet? ");
                 bet = int.Parse(Console.ReadLine());
 
-                if (bet > money || bet < 0)
+                if (bet > money || bet < 1)
                 {
                     Console.WriteLine("Invalid bet!");
                 }
                 else
                 {
                     money -= bet;
-                } 
+                    break;
+                }
             } while (bet > money || bet < 0);
         }
 
@@ -34,15 +36,13 @@ namespace Casino
             Console.WriteLine($"In bank: {money}");
         }
 
-        public static void ShowStatus()
+        public static void ShowStatus(Player p)
         {
-            Player p = new Player();
             p.Status();
         }
 
-        public static void PlaceBet()
+        public static void PlaceBet(Player p)
         {
-            Player p = new Player();
             p.Bet();
         }
     }
