@@ -50,9 +50,9 @@ C:::::C               a::::aaaa::::::a      s::::::s    i::::i  n::::n    n::::n
                                        Choose your game!");
 
                 Console.WriteLine($@"
-            *1*
-           50/50
-            ***");
+            *1*                                     *2*
+           50/50                                Steal money
+            ***                                     ***");
                 Player.ShowStatus(player);
                 Console.WriteLine();
 

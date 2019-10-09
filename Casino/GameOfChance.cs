@@ -27,7 +27,7 @@ namespace Casino
             string guess;
             //int winnings = 1;
 
-            while (boolean == true)
+            while (boolean)
             {
                 do
                 {
@@ -47,10 +47,21 @@ namespace Casino
                         if (bet > p.money || bet < 1)
                         {
                             Console.WriteLine("Invalid bet!");
+                            Wait.RunWaiting(500);
+                            Console.Clear();
+                            ChanceHeader();
+                            Console.WriteLine();
+                            Player.ShowStatus(p);
+                            Console.WriteLine();
                         }
                     } while (bet > p.money || bet < 1);
                     
                     p.money -= bet;
+                    Console.Clear();
+                    ChanceHeader();
+                    Console.WriteLine();
+                    Player.ShowStatus(p);
+                    Console.WriteLine();
 
                     //Player.PlaceBet(p);
                     Console.WriteLine();
@@ -69,7 +80,7 @@ namespace Casino
                         Console.ReadKey();
                         Console.WriteLine();
                         Random randomNumber = new Random();
-                        System.Threading.Thread.Sleep(500);
+                        Wait.RunWaiting(500);
                         int result = randomNumber.Next(1, 3);
 
                         Console.Write("It was");
@@ -77,28 +88,21 @@ namespace Casino
                         for (int i = 0; i < 3; i++)
                         {
                             Console.Write(".");
-                            System.Threading.Thread.Sleep(600);
+                            Wait.RunWaiting(600);
                         }
 
-                        if (result == 1)
+                        switch (result)
                         {
-                            PrintRed();
-                        }
-                        else
-                        {
-                            PrintBlack();
+                            case 1:
+                                PrintRed();
+                                break;
+
+                            case 2:
+                                PrintBlack();
+                                break;
                         }
 
-                        if (guess == "RED" && result == 1)
-                        {
-                            Console.WriteLine();
-                            Console.WriteLine("Congratulations!");
-                            Console.WriteLine($"You bet {bet}");
-                            bet *= 2;
-                            Console.WriteLine($"You just won {bet}");
-                            p.money += bet;
-                        }
-                        else if (guess == "BLACK" && result == 2)
+                        if (guess == "RED" && result == 1 || guess == "BLACK" && result == 2)
                         {
                             Console.WriteLine();
                             Console.WriteLine("Congratulations!");
@@ -118,67 +122,47 @@ namespace Casino
                     {
                         Console.WriteLine("Wrong input! Try again");
                         Console.ReadKey();
-                        Console.Clear();
-                        ChanceHeader();
+                        p.money += bet;
                     }
                 } while (guess != "RED" && guess != "BLACK");
 
-                Console.Write("Want to go again? Y or N: ");
-                string choice = Console.ReadLine();
-                choice = choice.ToUpper();
 
-                //Städa upp här, står i fel ordning
-                //if (choice == "Y")
-                //{
-                //    if (p.money > 0)
-                //    {
+                string choice; 
 
-                //    }
-                //}
-                if (p.money > 0)
+                do
                 {
-                    if (choice == "N")
-                    {
-                    }
-                    if (choice == "Y")
-                    {
-                        boolean = true;
-                    }
-                    else
-                    {
-                        while (choice != "Y" && choice != "N")
-                        {
-                            Console.WriteLine("Sorry, didn't catch that...");
-                            Console.Write("Want to go again? Y or N: ");
-                            choice = Console.ReadLine();
-                            choice = choice.ToUpper();
-                        }
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Sorry, insufficient funds...");
-                    Console.ReadKey();
-                }
-            }
+                    Console.Write("Want to go again? Y or N: ");
+                    choice = Console.ReadLine();
+                    choice = choice.ToUpper();
 
-            Console.Write("Want to exit game? Y or N or M for menu: ");
-            string exitChoice = Console.ReadLine();
-            exitChoice = exitChoice.ToUpper();
+                    switch (choice)
+                    {
+                        case "Y":
+                            if (p.money > 0)
+                            {
+                                RunGameOfChance(p);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Insufficient funds! Going back to Main menu");
+                                Wait.RunWaiting(1000);
+                                boolean = false;
+                            }
+                            break;
 
-            if (exitChoice == "Y")
-            {
-                Environment.Exit(0);
-            }
-            else if (exitChoice == "M")
-            {
-                
-            }
-            else
-            {
-                RunGameOfChance(p);
-            }
+                        case "N":
+                            Console.WriteLine("Going back to Main menu");
+                            Wait.RunWaiting(600);
+                            boolean = false;
+                            break;
 
+                        default:
+                            Console.WriteLine("Wrong input!");
+                            Wait.RunWaiting(900);
+                            break;
+                    } 
+                } while (choice != "Y" && choice != "N");
+            }
         }
 
         private static void PrintBlack()
